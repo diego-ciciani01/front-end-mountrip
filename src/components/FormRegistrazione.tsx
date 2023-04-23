@@ -23,8 +23,8 @@ function FormRegistrazione(){
     const [errore, setErrore] =  useState('');
 
     const cambiaRuolo = (event: SelectChangeEvent) => {
-        setRuolo(event.target.value as string);
-        console.log(event.target)
+            setRuolo(event.target.value as string);
+            console.log(event.target)         
     };
 
     function isValidEmail(email) {
@@ -64,7 +64,7 @@ function FormRegistrazione(){
         }
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         if (checkPassword(password, ripetiPassword)){
             console.log(setErrore);
@@ -75,6 +75,8 @@ function FormRegistrazione(){
                 setErrore("l'email è invalida");
                 console.log('The email is invalid');   
             }
+        }else if(event.target.value == ""){
+            setErrore("Devi scegliere un ruolo!")
         }
         setRegistrazione(true);
     };
