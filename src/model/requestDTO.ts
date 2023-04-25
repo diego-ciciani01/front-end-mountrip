@@ -3,6 +3,7 @@
 export interface UtenteLogin{
     username:string;
     password:string;
+    ruolo:string
 }
 
 export interface UtenteRegistrazione{

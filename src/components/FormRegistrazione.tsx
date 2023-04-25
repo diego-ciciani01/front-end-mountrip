@@ -7,6 +7,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
+import { UtenteRegistrazione } from '../model/requestDTO';
+
 
 function FormRegistrazione(){
     // variabili per entità utente
@@ -179,7 +181,20 @@ function FormRegistrazione(){
                     </FormControl>
                     <br></br>
                 </Box>  
-                <Button type="submit" variant="contained" style={{background:"#29C63C"}} disableElevation>
+                <Button type="submit" variant="contained" style={{background:"#29C63C"}} disableElevation 
+                onClick={async()=>{
+                    const credenzial: UtenteRegistrazione = {
+                        nome,
+                        cognome,
+                        email,
+                        username,
+                        password,
+                        
+                    }
+                    try{
+                        
+                    }
+                }}>
                     Registrati
                 </Button>
               {errore && <h2 style={{color: 'red'}}>{errore}</h2>}
