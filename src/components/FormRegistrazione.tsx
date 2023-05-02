@@ -189,11 +189,9 @@ function FormRegistrazione(){
                         email,
                         username,
                         password,
-                        
+                        ruolo
                     }
-                    try{
-                        
-                    }
+                
                 }}>
                     Registrati
                 </Button>
