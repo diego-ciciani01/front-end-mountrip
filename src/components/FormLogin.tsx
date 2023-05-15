@@ -5,9 +5,9 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import {Link, useNavigate} from 'react-router-dom';
-import {UtenteLogin} from '../model/requestDTO';
-import {authAction} from '../store/authentication/authentication.actions' 
-import {useAppDispatch} from '../store/store.config'
+import {UtenteLogin} from './../model/requestDTO';
+import {authAction} from './../store/authentication/authentication.actions'
+import {useAppDispatch} from './../store/store.config'
 
 
 function FormLogin(){ 
@@ -78,14 +78,15 @@ function FormLogin(){
                         }
                         
                     try{
-                        const result=await dispatch(authAction.loginUser(credentials));
+                        const result=await dispatch(authAction.logUtente(credentials));
                         unwrapResult(result);
                         navigate('/home');
                     }catch(e){
-                        console.log('error',e)
+                        console.log(e)
                     }
                 
-                }}>
+                }}
+                >
             {/* ####PER SAPERE A QUALE HOME MANDARE UN PARTICOLARE UTENTE, NELL'OGETTO DELL'UTENTE CI DEVE ESSERE ANCHE IL RUOLO#### */}
                 
                     invia

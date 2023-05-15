@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { authenticationReducer } from "./authentication/authentication.reducer"
 
-
+ 
 const store = configureStore({
     reducer: {
         ...authenticationReducer
+
     },
 })
 

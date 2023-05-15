@@ -11,7 +11,8 @@ export interface UtenteRegistrazione{
     password:string;
     email:string;
     username:string;
-    ruolo:string
+    ruolo:string;
+    immagine:any;
 
 }
 
