@@ -3,7 +3,6 @@
 export interface UtenteLogin{
     username:string;
     password:string;
-    ruolo:string
 }
 
 export interface UtenteRegistrazione{
@@ -12,5 +11,8 @@ export interface UtenteRegistrazione{
     password:string;
     email:string;
     username:string;
+    ruolo:string;
+    immagine:any;
+
 }
 

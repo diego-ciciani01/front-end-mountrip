@@ -1,32 +1,56 @@
 import React, {useEffect, useState} from 'react';
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
-import {Link, Navigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
 import { UtenteRegistrazione } from '../model/requestDTO';
+import {useAppDispatch} from 'store/store.config';
+import { toastActions } from 'store/toast/toast.action';
+import { toastType } from 'store/toast/type';
+import { DatasetLinked } from '@mui/icons-material';
+import PhotoIcon from '@mui/icons-material/Photo';
+import IconButton from '@mui/material/IconButton';
+import { Md5 } from 'ts-md5/dist/md5';
+import {RegistrazioneHoks} from './hoks/hoksRegistrazione';
 
 
 function FormRegistrazione(){
     // variabili per entità utente
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [ripetiPassword, setRipetiPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [nome, setNome ] = useState('');
-    const [cognome, setCognome] = useState('');
     const [ruolo, setRuolo] = useState('');
-
+    const [requestUserSingUp, setRequestUserSingUp] = useState<UtenteRegistrazione>();
+    const [newUser, setNewUser] = useState<UtenteRegistrazione>({
+        nome: '',
+        cognome: '',
+        password: '',
+        email: '',
+        ruolo: '',
+        username: '',
+        immagine: ''
+    });
+    const [password, setPassword] = useState('');
+    
     // variabili per funzionalità degli del form
-    const [registrati, setRegistrazione] = useState(false);
     const [errore, setErrore] =  useState('');
 
+    const [isLoading, data] = RegistrazioneHoks(requestUserSingUp);
+    useEffect(() => {  
+        if (data) {
+            navigate('/login');
+        }
+    }, [data]); 
+
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     const cambiaRuolo = (event: SelectChangeEvent) => {
-            setRuolo(event.target.value as string);
-            console.log(event.target)         
+        // onChange={(e) => setNewUser({...newUser, cognome:e.target.value})}
+        setNewUser({...newUser, ruolo:event.target.value})
     };
 
     function isValidEmail(email) {
@@ -36,10 +60,8 @@ function FormRegistrazione(){
     const special = (c) => {
         for (let i = 0; i < array.length; i++)
         {
-            // console.log(c);           
             if (c == array[i])
             {
-                // console.log("merdaaa");           
                 return true;
             }
         }
@@ -54,16 +76,20 @@ function FormRegistrazione(){
         if(password == ripetiPassword){
             for(let i=0; i<password.length; i++){
                 if(special(password.charAt(i))){
-                    console.log("bella pe voi")
+                    //converti la password in MDC e la salvo nell'oggetto utente
+                    setNewUser({...newUser, password:Md5.hashStr(password)})
+                    console.log(newUser.password);
                     return true;
-                }
+                }      
             } 
             setErrore("non è presente nessun carattere speciale nella password")
+            dispatch(toastActions.show({message: "non è presente nessun carattere speciale nella password", type: toastType.ERRORE_GENERICO}))
            return false;
         }else{
             setErrore("le due password sono diverse");
+            dispatch(toastActions.show({message: "le due password sono diverse", type: toastType.ERRORE_GENERICO}))
             return false;
-        }
+        }    
     }
 
     const handleSubmit = (event) => {
@@ -71,17 +97,42 @@ function FormRegistrazione(){
         if (checkPassword(password, ripetiPassword)){
             console.log(setErrore);
             // dopo aver controllato la password passo al controllo della email in termini di carattere
-            if (isValidEmail(email)) {
+            if (isValidEmail(newUser.email)) {
                 console.log('The email is valid');
             } else {
                 setErrore("l'email è invalida");
-                console.log('The email is invalid');   
+                dispatch(toastActions.show({message: "l'email è invalida", type: toastType.ERRORE_GENERICO}))
+                return;
             }
-        }else if(event.target.value == ""){
+        }else if(event.target.value == ''){
+            dispatch(toastActions.show({message: "deve essere scelto un ruolo", type: toastType.ERRORE_GENERICO}))
             setErrore("Devi scegliere un ruolo!")
+            return;
         }
-        setRegistrazione(true);
+        setRequestUserSingUp(newUser);
+        console.log(newUser);
+
+        
     };
+    // questa funzione mi converte il file, nel tipo base 64
+   const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file)
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          }
+          fileReader.onerror = (error) => {
+            reject(error);
+          }
+        })
+      }
+    
+    const handleFileRead = async (event) => {
+    const file = event.target.files[0]
+    const base64 = await convertBase64(file)
+    setNewUser({...newUser, immagine: base64})
+    }
 
     return(
         <div className='container-form'>
@@ -96,13 +147,27 @@ function FormRegistrazione(){
                     autoComplete="off"
                 >   
                     <div>
+                        <IconButton component="label">
+                            <input
+                                type="file"
+                                accept=".jpg, .jpeg, .png"
+                                onChange={e => handleFileRead(e)}
+                                multiple
+                                hidden
+                            />
+                             <PhotoIcon />
+                        </IconButton>  
+                    </div>
+
+                    <div>
                         <TextField
                                 style={{ background: "#E1F0DA" }}
                                 id="filled-required-nome"
                                 label="nome"
                                 variant="filled"
-                                onChange={(e) => setNome(e.target.value)}
-                                value={nome}
+                                // onChange={(e) => setNome(e.target.value)}
+                                onChange={(e) => setNewUser({...newUser, nome:e.target.value})}
+                                value={newUser.nome}
                                 required={true}
 
                         />
@@ -112,8 +177,9 @@ function FormRegistrazione(){
                                 id="filled-required-cognome"
                                 label="cognome"
                                 variant="filled"
-                                onChange={(e) => setCognome(e.target.value)}
-                                value={cognome}
+                                onChange={(e) => setNewUser({...newUser, cognome:e.target.value})}
+                                value={newUser.cognome}
+                                
                         />
                     </div>
                     <div>
@@ -123,8 +189,8 @@ function FormRegistrazione(){
                             id="filled-required-username"
                             label="username"
                             variant="filled"
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
+                            onChange={(e) => setNewUser({...newUser, username:e.target.value})}
+                            value={newUser.username}
 
                         /> 
                          <TextField
@@ -134,8 +200,8 @@ function FormRegistrazione(){
                             type="email"
                             label="email"
                             variant="filled"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
+                            onChange={(e) => setNewUser({...newUser, email:e.target.value})}
+                            value={newUser.email}
                             
                         /> 
                     </div>
@@ -147,9 +213,9 @@ function FormRegistrazione(){
                             label="Password"
                             type="password"
                             autoComplete="current-password"
-                            variant="filled"
+                            variant="filled"                          
                             onChange={(e) => setPassword(e.target.value)}
-                            value={password}
+                            value={password}  
                             
                         />
                          <TextField
@@ -175,32 +241,18 @@ function FormRegistrazione(){
                         onChange={cambiaRuolo}
                         >
                         <MenuItem value={'utente'} >Utente</MenuItem>
-                        <MenuItem value={'Admin'} placeholder="Admin">Admin</MenuItem>
                         <MenuItem value={'Associazione'} placeholder="Associazione">Associazione</MenuItem>
                         </Select>
                     </FormControl>
                     <br></br>
                 </Box>  
-                <Button type="submit" variant="contained" style={{background:"#29C63C"}} disableElevation 
-                onClick={async()=>{
-                    const credenzial: UtenteRegistrazione = {
-                        nome,
-                        cognome,
-                        email,
-                        username,
-                        password,
-                        
-                    }
-                    try{
-                        
-                    }
-                }}>
+                <Button type="submit" variant="contained" style={{background:"#29C63C"}} disableElevation>
                     Registrati
                 </Button>
               {errore && <h2 style={{color: 'red'}}>{errore}</h2>}
+
             </form>
         </div>
     );
 }
-
 export default FormRegistrazione;
