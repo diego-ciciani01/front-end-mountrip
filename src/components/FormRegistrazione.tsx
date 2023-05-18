@@ -11,7 +11,7 @@ import { UtenteRegistrazione } from '../model/requestDTO';
 import {useAppDispatch} from 'store/store.config';
 import { toastActions } from 'store/toast/toast.action';
 import { toastType } from 'store/toast/type';
-import { DatasetLinked } from '@mui/icons-material';
+import { DatasetLinked, Password } from '@mui/icons-material';
 import PhotoIcon from '@mui/icons-material/Photo';
 import IconButton from '@mui/material/IconButton';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -22,6 +22,7 @@ function FormRegistrazione(){
     // variabili per entità utente
     const [ripetiPassword, setRipetiPassword] = useState('');
     const [ruolo, setRuolo] = useState('');
+    const [password, setPassword] = useState('');
     const [requestUserSingUp, setRequestUserSingUp] = useState<UtenteRegistrazione>();
     const [newUser, setNewUser] = useState<UtenteRegistrazione>({
         nome: '',
@@ -32,7 +33,6 @@ function FormRegistrazione(){
         username: '',
         immagine: ''
     });
-    const [password, setPassword] = useState('');
     
     // variabili per funzionalità degli del form
     const [errore, setErrore] =  useState('');
@@ -73,12 +73,17 @@ function FormRegistrazione(){
         // aggiungi altre funzionalirà per la password, tipo lunghezza e necessita di caratteri
         // speciali 
         setErrore('');
+        
         if(password == ripetiPassword){
             for(let i=0; i<password.length; i++){
                 if(special(password.charAt(i))){
+                    console.log(password)
+                    console.log(ripetiPassword)
                     //converti la password in MDC e la salvo nell'oggetto utente
-                    setNewUser({...newUser, password:Md5.hashStr(password)})
-                    console.log(newUser.password);
+                    const md5 = Md5.hashStr(password);
+                    console.log(md5);
+                    setNewUser({...newUser, password:md5})
+                    // console.log(newUser.password);
                     return true;
                 }      
             } 

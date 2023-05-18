@@ -13,7 +13,7 @@ function Navbar(){
                     <Link style={{color:'black', textDecoration:'none'}} to="/login">
                         <li>Accedi</li>
                     </Link>
-                    <Link style={{color:'black', textDecoration:'none'}} to="/registrati">
+                    <Link style={{color:'black', textDecoration:'none'}} to="/registrazione">
                         <li>Registrati</li>                
                     </Link>
                     <Link style={{color:'black', textDecoration:'none'}} to="/chi-siamo">
