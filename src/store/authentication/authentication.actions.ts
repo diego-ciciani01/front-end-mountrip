@@ -18,6 +18,9 @@ const logUtente = createAsyncThunk(
             return;
         }
         try {
+
+            // vadi ad inserire nello storage l'utente e il tocken 
+
             const response = await loginUser(requestUtenteLogin);
             localStorage.setItem('token', response.data.tokenJWT);
             localStorage.setItem('user', JSON.stringify(response.data.utente));

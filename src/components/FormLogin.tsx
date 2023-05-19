@@ -8,32 +8,35 @@ import {Link, useNavigate} from 'react-router-dom';
 import {UtenteLogin} from './../model/requestDTO';
 import {authAction} from './../store/authentication/authentication.actions'
 import {useAppDispatch} from './../store/store.config'
+import {useSelector} from 'react-redux';
+import { Md5 } from 'ts-md5/dist/md5';
+import { authenticationSelector } from 'store/authentication/authentication.selector';
+import { getUser } from 'callAPI/utils';
 
 
 function FormLogin(){ 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [inputPassword, setInputPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
     const dispatch = useAppDispatch();
     const navigate=useNavigate();
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        // Simulazione di un processo di autenticazione
-        if (username === 'user' && password === 'password') {
-          // Se le credenziali sono corrette, salva il nome utente nello stato interno
-          setLoggedIn(true);
-          // Reindirizza l'utente alla homepage
-         console.log("utente loggato")
-        } else {
-          // Altrimenti, mostra un messaggio di errore
-          console.log("utente non loggato")   
-        }
-      }
+    useEffect(()    => {
+        window.localStorage.clear();
+    }   , []);
+    
+    // const loading= useSelector(authenticationSelector.load);
 
+
+    const criptMD5 = (event) => {
+        setInputPassword(event.target.value);
+        setPassword(Md5.hashStr(event.target.value));
+
+    }
+    
     return(
        <div className="container-form">
-            <form onSubmit={handleSubmit}>
             <h1 className='titolo-form'>MounTrip</h1>
                 <Box
                     component="form"
@@ -63,26 +66,33 @@ function FormLogin(){
                         type="password"
                         autoComplete="current-password"
                         variant="filled"
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
+                        onChange= {e => criptMD5(e)}
+                        value={inputPassword}
                         required={true}
                     />
                     </div>
                 </Box>
                     <br></br>
-                <Button type="submit" variant="contained" style={{background:"#29C63C"}} disableElevation
-                    onClick={async()=>{
+
+                <Button type="submit" variant="contained" style={{background:"#29C63C"}} 
+                    onClick={async()=>{                        
                         const credentials: UtenteLogin = {
                             username,
                             password   
                         }
                         
                     try{
+                      
+                       console.log("bella pe tee") 
                         const result=await dispatch(authAction.logUtente(credentials));
                         unwrapResult(result);
+                        // divido la home in base al tipo di utente loggato
+                        const utente = getUser();
+                        // if(utente.username)
                         navigate('/home');
                     }catch(e){
-                        console.log(e)
+                        console.log('error', e)
+
                     }
                 
                 }}
@@ -91,10 +101,9 @@ function FormLogin(){
                 
                     invia
                 </Button>
-                <Link style={{color:'black'}} to="/registrati">
+                <Link style={{color:'black'}} to="/registrazione">
                     <h3>Registrati</h3>
                 </Link>
-            </form>
     </div>
     );
 }

@@ -22,13 +22,14 @@ export const RegistrazioneHoks = (dto?: UtenteRegistrazione) =>{
                 setData(rispostaDTO);
                }
             } catch (error) {
-                
                 console.log(error as AxiosError);
+            }finally{
+                setRegistrazione(false);
             }
             
         }
         cattura();
-    })
+    }, [dto]);
 return [Registra, data];
 
 }
