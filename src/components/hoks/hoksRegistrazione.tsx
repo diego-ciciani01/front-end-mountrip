@@ -1,4 +1,3 @@
-
 import {UtenteRegistrazione} from "../../model/requestDTO"
 import {useAppDispatch} from "../../store/store.config"
 import {useEffect, useState} from 'react';
@@ -22,14 +21,14 @@ export const RegistrazioneHoks = (dto?: UtenteRegistrazione) =>{
                 setData(rispostaDTO);
                }
             } catch (error) {
-                
                 console.log(error as AxiosError);
+            }finally{
+                setRegistrazione(false);
             }
             
         }
         cattura();
-    })
+    }, [dto]);
 return [Registra, data];
 
 }
-

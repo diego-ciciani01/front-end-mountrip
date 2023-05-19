@@ -16,3 +16,31 @@ export interface UtenteRegistrazione{
 
 }
 
+export interface commenti{
+    testo:string;
+    dataInserimento:Date;
+    commentoPadre:string;
+    commentoFiglio:string;
+    attivitàCommentate:string;
+    utenteCommentatore:string;
+
+}
+
+
+// escursione
+
+export interface resquestEscursione {
+    nome:string;
+    descrizione:string;
+    quota:number;
+    dataInizio:Date;
+    dataFine:Date;
+    luogoPartenza:string;
+    luogoArrivo:string;
+    percorsoGPX:string;
+    publica:boolean;
+    difficolta:number;
+    commenti: string;
+    organizzatore: string;
+
+}
