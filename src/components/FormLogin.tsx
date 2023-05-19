@@ -13,8 +13,6 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { authenticationSelector } from 'store/authentication/authentication.selector';
 import { getUser } from 'callAPI/utils';
 
-
-
 function FormLogin(){ 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -35,9 +33,7 @@ function FormLogin(){
         setPassword(Md5.hashStr(event.target.value));
 
     }
-
     
-
     return(
        <div className="container-form">
             <h1 className='titolo-form'>MounTrip</h1>
@@ -76,6 +72,9 @@ function FormLogin(){
                     </div>
                 </Box>
                     <br></br>
+
+
+
                 <Button type="submit" variant="contained" style={{background:"#29C63C"}} 
                     onClick={async()=>{                        
                         const credentials: UtenteLogin = {
