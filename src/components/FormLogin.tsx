@@ -14,7 +14,6 @@ import { authenticationSelector } from 'store/authentication/authentication.sele
 import { getUser } from 'callAPI/utils';
 
 
-
 function FormLogin(){ 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -35,9 +34,7 @@ function FormLogin(){
         setPassword(Md5.hashStr(event.target.value));
 
     }
-
     
-
     return(
        <div className="container-form">
             <h1 className='titolo-form'>MounTrip</h1>
@@ -76,6 +73,7 @@ function FormLogin(){
                     </div>
                 </Box>
                     <br></br>
+
                 <Button type="submit" variant="contained" style={{background:"#29C63C"}} 
                     onClick={async()=>{                        
                         const credentials: UtenteLogin = {
@@ -84,6 +82,7 @@ function FormLogin(){
                         }
                         
                     try{
+                      
                        console.log("bella pe tee") 
                         const result=await dispatch(authAction.logUtente(credentials));
                         unwrapResult(result);
@@ -93,6 +92,7 @@ function FormLogin(){
                         navigate('/home');
                     }catch(e){
                         console.log('error', e)
+
                     }
                 
                 }}
