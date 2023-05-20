@@ -1,7 +1,7 @@
 // get user 
-import { ResponseUtente } from "model/response"
+import { ResposeUtente } from "model/response"
 
-export const getUser = (): ResponseUtente => {
+export const getUser = (): ResposeUtente => {
      const json = JSON.stringify(localStorage.getItem("user"));
      const userString = JSON.parse(json);
      const user = JSON.parse(userString);

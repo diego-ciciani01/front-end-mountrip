@@ -1,9 +1,9 @@
-export interface ResponeLogin{
-    tokenJWT : string;
-    utente: ResponseUtente;
+export interface ResposeLogin{
+    tokenJWT : string ;
+    utente: ResposeUtente;
 }
 
-export interface ResponseUtente {
+export interface ResposeUtente {
     nome: string;
     cognome: string;
     username: string

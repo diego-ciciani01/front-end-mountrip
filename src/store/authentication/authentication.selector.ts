@@ -1,9 +1,14 @@
 import {RootState} from 'store/store.config'
 
-const userLogin = (state:RootState) => state.authentication.ResponeLogin?.utente;
-const load = (state:RootState) => state.authentication.load;
+const userToken = (state:RootState) => state.auth.responseLogin?.tokenJWT;
+const userLogin = (state:RootState) => state.auth.responseLogin?.utente
 
+
+
+// const userLogin = (state:RootState) => state.auth.ResposeLogin?.utente;
+
+// console.log(userLogin);
 export const authenticationSelector = {
     userLogin,
-    load
+    userToken
 }

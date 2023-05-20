@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {authenticationReducer} from '../store/authentication/authentication.reducer';
+import {authReducer} from '../store/authentication/authentication.reducer';
 
 // questa funzione viene chiamata da index.tsx per creare lo store
 
@@ -7,7 +7,7 @@ import {authenticationReducer} from '../store/authentication/authentication.redu
 export const store = configureStore({
   reducer: {
      // qui vanno inseriti tutti i reducer
-    ...authenticationReducer,
+    ...authReducer,
 
   },
 });

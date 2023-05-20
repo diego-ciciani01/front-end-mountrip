@@ -10,7 +10,6 @@ import {authAction} from './../store/authentication/authentication.actions'
 import {useAppDispatch} from './../store/store.config'
 import {useSelector} from 'react-redux';
 import { Md5 } from 'ts-md5/dist/md5';
-import { authenticationSelector } from 'store/authentication/authentication.selector';
 import { getUser } from 'callAPI/utils';
 
 function FormLogin(){ 
@@ -25,9 +24,6 @@ function FormLogin(){
         window.localStorage.clear();
     }   , []);
     
-    // const loading= useSelector(authenticationSelector.load);
-
-
     const criptMD5 = (event) => {
         setInputPassword(event.target.value);
         setPassword(Md5.hashStr(event.target.value));
@@ -91,7 +87,7 @@ function FormLogin(){
                         // if(utente.username)
                         navigate('/home');
                     }catch(e){
-                        console.log('error', e)
+                        console.log('errore', e)
                     }
                 
                 }}

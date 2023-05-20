@@ -16,6 +16,15 @@ export interface UtenteRegistrazione{
 
 }
 
+export interface UtenteModifica{
+    email:string;
+    password:string;
+}
+
+export interface UtenteLogout{
+    jwtToken:string
+}
+
 export interface commenti{
     testo:string;
     dataInserimento:Date;
