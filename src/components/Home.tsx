@@ -3,14 +3,17 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/store.config";
 import { authenticationSelector } from "store/authentication/authentication.selector";
-import { getToken } from "callAPI/utils";
+import { getToken, getUser } from "callAPI/utils";
 import {escursioniAction} from '../store/escursioni/escursioni.action'
+import Navbar from './Navbar'
+
 
 function Home(){
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const check = useSelector(authenticationSelector.userLogin);
+    const user = getUser()
     // da aggiungere un selettore per la gestione delle card
     useEffect(() => {
         
@@ -18,13 +21,17 @@ function Home(){
             navigate('/login');
 
         } else {
-            // vai a prendere le card dallo store 
-            dispatch(escursioniAction.getListEscursioni());
+            // vai a prendere le card dallo store
+            // RICORDA IL TIPO DI ESCURSIONE DA PRENDERE (UTENTE O ASSOCIAZIONE) LO CAPISCE 
+            // IL BE IN BASE AL JVT TOKEN
+            
+            dispatch(escursioniAction.getAttivitaOrganizzate());
         }
     }, []);
 
     return(
-        <div></div>
+        <Navbar></Navbar>
+        
     );
 
 }

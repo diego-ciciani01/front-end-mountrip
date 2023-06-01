@@ -5,10 +5,11 @@ import {UtenteLogin} from '../../model/requestDTO';
 import { loginController } from "./authentication.controller"
 import { toastActions } from '../toast/toast.action'
 import { toastType } from "../toast/type";
-import {loginUser} from "../../callAPI/userAPI";
+import {loginUser, userLogOut} from "../../callAPI/userAPI";
 import { ResposeLogin, ResposeUtente } from 'model/response';
 import {UtenteModifica} from 'model/requestDTO';
 import { UtenteLogout } from '../../model/requestDTO';
+import {deleteToken} from '../../callAPI/utils'
 // sono le azioni fatte per passare insereire nello store di redux le informazioni. 
 // in seguito vengono caricate e fatte le chiamate API verso il BE 
 const logUtente = createAsyncThunk(
@@ -35,25 +36,21 @@ const logUtente = createAsyncThunk(
     }
 )
 
-// const logoutUtente = createAsyncThunk(
-//     '/logout',
-//     async(requestUteneLogout:UtenteLogout, thunkAPI): Promise<void> =>{
-//         try{
-
-//         }
-//     }
-// )
-
-// const modificaUser = createAsyncThunk(
-//     '/modifica',
-//     async(requestModificaUtente: UtenteModifica, thunkAPI): Promise<ResposeUtente> => {
-//         try{
-//             const response = await utente_m
-//         }
-//     }
-// )
+const logoutUser = createAsyncThunk(
+    '/logout',
+    async (requestUtenteLogout: UtenteLogout, thunkAPI): Promise<void> => {
+        try {
+            await userLogOut(requestUtenteLogout);
+            deleteToken();
+        } catch (e) {
+            const error = e as AxiosError;
+            throw e;
+        }
+    }
+)
 
 export const authAction = {
-    logUtente
+    logUtente,
+    logoutUser
 }
 

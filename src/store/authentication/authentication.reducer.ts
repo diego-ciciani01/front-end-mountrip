@@ -33,7 +33,30 @@ export const authReducer = {
                     error: false
                 }
             })
-
+            .addCase(authAction.logoutUser.rejected, (state) => {
+                return {
+                    ...state,
+                    error: true,
+                    loading: false
+                }
+            }
+        )
+            .addCase(authAction.logoutUser.pending, (state) => {
+                    return {
+                        ...state,
+                        loading: true,
+                        error: false
+                    }
+                }
+            )
+            .addCase(authAction.logoutUser.fulfilled, (state) => {
+                return {
+                    ...state,
+                    responseUtenteLogin: undefined,
+                    loading: false,
+                    error: false
+                }
+            })
 
     })
 }

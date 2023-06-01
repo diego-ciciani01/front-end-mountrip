@@ -17,3 +17,8 @@ export const getToken = (): string => {
     return token ? token : 'null';
 }
 
+// delete token
+export const deleteToken = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+}

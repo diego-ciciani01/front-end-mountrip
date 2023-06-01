@@ -6,7 +6,8 @@ export interface ResposeLogin{
 export interface ResposeUtente {
     nome: string;
     cognome: string;
-    username: string
+    username: string;
+    ruolo:string;
 }
 
 export interface ResposeAttivita {
@@ -38,4 +39,8 @@ export interface ResposeAttivita {
     difficolta:number;
     commenti: string;
     organizzatore: string;
+}
+
+export interface ResposeAccettata {
+    status: boolean;
 }

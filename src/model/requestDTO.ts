@@ -25,7 +25,7 @@ export interface UtenteLogout{
     jwtToken:string
 }
 
-export interface commenti{
+export interface Commenti{
     testo:string;
     dataInserimento:Date;
     commentoPadre:string;
@@ -35,10 +35,9 @@ export interface commenti{
 
 }
 
-
 // escursione
 
-export interface resquestEscursione {
+export interface ResquestEscursioneIserimento {
     nome:string;
     descrizione:string;
     quota:number;
@@ -53,3 +52,7 @@ export interface resquestEscursione {
     organizzatore: string;
 
 }
+
+export interface AccettaAttivita {
+    jwtToken:string
+}   
