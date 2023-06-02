@@ -12,6 +12,7 @@ import Inviti from './components/Inviti'
 function App() {
   return (
     <Router>
+      <Navbar></Navbar>
       <Routes>
         <Route  path='/registrazione' Component={FormRegistrazione}/>
         <Route  path='/login' Component={FormLogin}/>
@@ -19,7 +20,6 @@ function App() {
         <Route  path='/attivita' Component={Card}/>
         <Route  path='/attivita-pubbliche' Component={AttivitaPubbliche}/>
         <Route  path='/inviti' Component={Inviti}/>
-        
       </Routes>
     </Router>
 

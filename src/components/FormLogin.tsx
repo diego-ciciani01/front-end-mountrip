@@ -83,7 +83,7 @@ function FormLogin(){
                         const result=await dispatch(authAction.logUtente(credentials));
                         unwrapResult(result);
                         // divido la home in base al tipo di utente loggato
-                        const utente = getUser();
+                        navigate('/home');
                     }catch(e){
                         console.log('errore', e)
                     }
