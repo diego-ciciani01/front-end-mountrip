@@ -12,7 +12,7 @@ import Inviti from './components/Inviti'
 function App() {
   return (
     <Router>
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       <Routes>
         <Route  path='/registrazione' Component={FormRegistrazione}/>
         <Route  path='/login' Component={FormLogin}/>

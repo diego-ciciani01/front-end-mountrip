@@ -16,6 +16,7 @@ function Home(){
     const navigate = useNavigate();
     const check = useSelector(authenticationSelector.userLogin);
     const user = getUser()
+    const tipoPagina = "home";
     // da aggiungere un selettore per la gestione delle card
     useEffect(() => {
         
@@ -27,20 +28,8 @@ function Home(){
             // RICORDA IL TIPO DI ESCURSIONE DA PRENDERE (UTENTE O ASSOCIAZIONE) LO CAPISCE 
             // IL BE IN BASE AL JVT TOKEN
             
-            // dispatch(escursioniAction.getAttivitaOrganizzate());
-            // const organizzatore = "luca";
-            // const descrizione = "escrsione sul corno granda - campo imperatore";
-            // const difficolta = "E1";
-            // const data: string[] = ["13-03-2024", "09:30", "Elis", "Campo imperatore"];
-            // const cuota = 40;
-            // const commenti = [
-                // {idCommento:'1', author: 'luca', text: 'è stata una bellissima escursione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
-                // {idCommento:'2', author: 'marco', text: 'la guida è stata all altezza della difficoltà del percorso', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
-                // {idCommento:'3', author: 'luisa', text: 'hai proprio ragione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'1'},
-            // ]
-            // const stato = "aperto";
-            // const lunghezza = 12;
-            // const valutazione: number[] = [1,2,3,4,5];
+            dispatch(escursioniAction.getAttivitaOrganizzate());
+         
             const commenti = [
               [
                 {organizzatore:'luca',descrizione:'escrsione sul corno granda - campo imperatore',difficolta:'E1', data:[
@@ -60,7 +49,11 @@ function Home(){
     }, []);
 
     return(
-        <div></div>
+        <>
+            <Navbar></Navbar>
+            <Card tipoPagina={tipoPagina}/>
+        </>
+
     );
 
 }

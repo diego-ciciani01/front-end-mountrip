@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 import logo from 'img/logo.png';
 import { getUser } from "callAPI/utils";
 
-function Navbar(){
+function Navbar(username){
     const user = getUser()
-    const [userNull, setUserNull] = useState(false); 
-    if (user !== null){
-        setUserNull(true);
-        console.log("coxsaiomim")
-    }
     return(
         <div>
-            {(!userNull) ? <></>:
-                (user.ruolo ==="UTENTE") ? (
+                {(user.ruolo ==="UTENTE") ? (
                     <div className='Navbar'>
                         <div>
                             <img src={logo}></img>

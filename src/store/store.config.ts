@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { authReducer } from "./authentication/authentication.reducer"
-
+import {escursioniReducer} from "./escursioni/escursioni.reducer"
  
 const store = configureStore({
     reducer: {
-        ...authReducer
+        ...authReducer,
+        ...escursioniReducer
 
     },
 })
