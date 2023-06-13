@@ -9,17 +9,28 @@ import {PaginaTipo} from "../store/escursioni/types"
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import {ResposeAttivita} from '../model/response'
+import Item from "./Item";
+import { Button } from "@mui/material";
 
-function Card (tipoPagina) {
+export interface EscursioniItemProps {
+    audiobooks: ResposeAttivita[];
+    onSelectAudiobook: (audiobook: ResposeAttivita) => void;
+}
+
+function EscursioniList ({props}) {
     const check = useSelector(authenticationSelector.userLogin);
     const user = useSelector(authenticationSelector.userLogin);
-    const escursioniList = useSelector(escursioniSelector.list)
+    const LIST = useSelector(escursioniSelector.list)
     const pageType = useSelector(escursioniSelector.page)
-    const [escursioneSelezionata, setEscursioneSelezionata] = useState <ResposeAttivita | null>();
+    const [escursioneSelezionata, setEscursioneSelezionata] = useState <ResposeAttivita| any>();
+
+    // variabile usata per moccare il BE
+    // const {escursioni} = props;
+
+
     const navigate = useNavigate(); 
-    var tipoPagina;
 
-
+    console.log("cioaooo",props[0].organizzatore)
      // qui controllo se l'utente è loggato, se non lo è lo reindirizzo alla pagina di login
        useEffect(() => {
         if (!check || getToken() === null) {
@@ -33,7 +44,7 @@ function Card (tipoPagina) {
 
     // funzione che ritorna un messaggio quando no ci sono informazioni da mostrare 
     function listaVuota(){
-        if(escursioniList?.length === 0){
+        if(LIST?.length === 0){
             if(pageType === PaginaTipo.HOMEPAGE){
                 return <Alert severity="warning">Non hai ancora effettuato nessuona iscrizione </Alert>
             }else if(pageType === PaginaTipo.MIEATTIVITA){
@@ -48,6 +59,7 @@ function Card (tipoPagina) {
     // questa funzione ti permette di accettare la partecipazione alle attività sotto la voce inviti
 
     return(
+        
         (!check) ? <div id="pagina vuota"></div> :
         (escursioneSelezionata == null) ?
         (
@@ -55,15 +67,22 @@ function Card (tipoPagina) {
                 <Navbar username={user}/>
                 <div className='row d-flex justify-content-center'>
                     {
-                        escursioniList?.map((escursione, index) => )
-                    }
-                </div>
-            </div>   
-        )
-    ):(
+                        // LIST.map((uscite, index) => <Item key={index} LIST={uscite} escursioneSelezionata={escursioneSelezionata}
 
+                        // ></Item>)
+                        // escursioni?.map((uscite, index) => <Item key={index} escursioni={uscite}></Item>)
+                        <Item props={props}></Item>
+                    }   
+                </div>
+                {/* {listaVuota()}
+                {pageType===PaginaTipo.HOMEPAGE && <Button data-testid='buttonAggiungiEscursione'
+                    onClick={() => navigate('/creaEscursione')}> aggiungi una nuova escursione </Button>} */}
+            </div>   
+        ):(
+            <div></div>
+        )
     )
 
 }
 
-export default Card;
+export default EscursioniList;

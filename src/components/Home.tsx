@@ -6,7 +6,8 @@ import { authenticationSelector } from "store/authentication/authentication.sele
 import { getToken, getUser } from "callAPI/utils";
 import {escursioniAction} from '../store/escursioni/escursioni.action'
 import Navbar from './Navbar'
-import Card from "./Card";
+import EscursioniList from "./EscursioniList";
+import { ResposeAttivita } from "model/response";
 
 
 
@@ -18,6 +19,8 @@ function Home(){
     const user = getUser()
     const tipoPagina = "home";
     // da aggiungere un selettore per la gestione delle card
+
+    
     useEffect(() => {
         
         if(getToken()==='null' || !check){
@@ -29,29 +32,45 @@ function Home(){
             // IL BE IN BASE AL JVT TOKEN
             
             dispatch(escursioniAction.getAttivitaOrganizzate());
-         
-            const commenti = [
-              [
-                {organizzatore:'luca',descrizione:'escrsione sul corno granda - campo imperatore',difficolta:'E1', data:[
-                    "13-03-2024", "09:30", "Elis", "Campo imperatore"], cuota: 20, commenti: 
-                    [
-                        {idCommento:'1', author: 'luca', text: 'è stata una bellissima escursione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
-                        {idCommento:'2', author: 'marco', text: 'la guida è stata all altezza della difficoltà del percorso', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
-                        {idCommento:'3', author: 'luisa', text: 'hai proprio ragione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'1'},
-                    ],
-                    stato:'aperto', lunghezza:12, valutazione:[1,2,3,4,5]
-                
-                }
-              ]
-            ]
-
+        
+            // const escursione = [
+            //     [
+            //       {organizzatore:'luca',descrizione:'escrsione sul corno granda - campo imperatore',difficolta:'E1', data:[
+            //           "13-03-2024", "09:30", "Elis", "Campo imperatore"], cuota: 20, commenti: 
+            //           [
+            //               {idCommento:'1', author: 'luca', text: 'è stata una bellissima escursione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
+            //               {idCommento:'2', author: 'marco', text: 'la guida è stata all altezza della difficoltà del percorso', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'0'},
+            //               {idCommento:'3', author: 'luisa', text: 'hai proprio ragione', date: '2024-04-12', attivitaCommentata:'1', commentoPadreId:'1'},
+            //           ],
+            //           stato:'aperto', lunghezza:12, valutazione:[1,2,3,4,5]
+                  
+            //       }
+            //     ]
+            //   ]
         }
     }, []);
+    const escursione:ResposeAttivita []= [
+          {organizzatore:'luca',descrizione:'escrsione sul corno granda - campo imperatore',difficolta:'E1', dataInizio:"2022-02-21", dataFine:"2022-02-24",
+          quota: 20, commenti: 
+              [
+                  {idCommento:1, author: 'luca', text: 'è stata una bellissima escursione', date: '2024-04-12', attivitaCommentata:1, commentoPadreId:0},
+                  {idCommento:2, author: 'marco', text: 'la guida è stata all altezza della difficoltà del percorso', date: '2024-04-12', attivitaCommentata:1, commentoPadreId:0},
+                  {idCommento:3, author: 'luisa', text: 'hai proprio ragione', date: '2024-04-12', attivitaCommentata:1, commentoPadreId:1},
+              ],
+              publica:true, 
+              valutazione:3,
+              percorsoGPX:"cds",
+              luogoArrivo:"campo",
+              luogoPartenza:"roma",
+              nome:"trekking abbruzzo"
+          
+          }
+      ]
 
     return(
         <>
-            <Navbar></Navbar>
-            <Card tipoPagina={tipoPagina}/>
+            {/* <Navbar></Navbar> */}
+            <EscursioniList props={escursione} />
         </>
 
     );

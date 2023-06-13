@@ -1,7 +1,7 @@
 import {ResposeAttivita} from "model/response"
 
 export interface typeAttivitaState{
-    resposeAttivita?:ResposeAttivita[];
+    escursioni:ResposeAttivita[] ;
     error:boolean;    
     page:PaginaTipo;
 }

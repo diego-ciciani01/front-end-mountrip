@@ -14,32 +14,29 @@ export interface ResposeAttivita {
     nome:string;
     descrizione:string;
     quota:number;
-    dataInizio:Date;
-    dataFine:Date;
+    dataInizio:string;
+    dataFine:string;
     luogoPartenza:string;
     luogoArrivo:string;
     percorsoGPX:string;
     publica:boolean;
-    difficolta:number;
-    commenti: string;
+    difficolta:string;
+    commenti: ResponseCommento[];
     organizzatore: string;
+    valutazione:number;
 
 }
 
-export interface ResposeAttivita {
-    nome:string;
-    descrizione:string;
-    quota:number;
-    dataInizio:Date;
-    dataFine:Date;
-    luogoPartenza:string;
-    luogoArrivo:string;
-    percorsoGPX:string;
-    publica:boolean;
-    difficolta:number;
-    commenti: string;
-    organizzatore: string;
+export interface  ResponseCommento{
+    idCommento:number;
+    author:string;
+    text:string;
+    date:string;
+    attivitaCommentata:number;
+    commentoPadreId:number;
+
 }
+
 
 export interface ResposeAccettata {
     status: boolean;
