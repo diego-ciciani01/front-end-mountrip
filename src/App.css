@@ -58,6 +58,17 @@ form {
   border-radius: 100%;
 }
 
+.LinkRight {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.prova {
+  display: inline-block;
+  float: right;
+}
+
 
                                         /* SLIDER  */
 
@@ -112,4 +123,18 @@ form {
 	width: 10px;
 	border-radius: 5px;
 	background-color: brown;
+}
+
+.container-form-modifica-utente
+{
+  background: #FFFFFF;
+  border-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+  height: 60vh;
+  margin-top: 10%;
+  margin-left: 25%;
 }

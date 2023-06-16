@@ -38,6 +38,7 @@ function FormRegistrazione(){
     const [errore, setErrore] =  useState('');
 
     const [isLoading, data] = RegistrazioneHoks(requestUserSingUp);
+    
     useEffect(() => {  
         if (data) {
             navigate('/login');

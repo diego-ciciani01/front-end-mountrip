@@ -5,9 +5,9 @@ import {UtenteLogin} from '../../model/requestDTO';
 import { loginController } from "./authentication.controller"
 import { toastActions } from '../toast/toast.action'
 import { toastType } from "../toast/type";
-import {loginUser, userLogOut} from "../../callAPI/userAPI";
+import {loginUser, modifica_utente, userLogOut} from "../../callAPI/userAPI";
 import { ResposeLogin, ResposeUtente } from 'model/response';
-import {UtenteModifica} from 'model/requestDTO';
+import {RequestUtenteModifica} from 'model/requestDTO';
 import { UtenteLogout } from '../../model/requestDTO';
 import {deleteToken} from '../../callAPI/utils'
 // sono le azioni fatte per passare insereire nello store di redux le informazioni. 
@@ -48,9 +48,24 @@ const logoutUser = createAsyncThunk(
         }
     }
 )
+const modificaUser = createAsyncThunk(
+    '/modifica',
+    async (requestUtenteModifica: RequestUtenteModifica, thunkAPI): Promise<ResposeUtente> => {
+        try{
+            const response = await modifica_utente(requestUtenteModifica);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            return response.data;
+        }catch(e){
+            const error = e as AxiosError;
+            throw e;
+        }
+    }
+
+)
 
 export const authAction = {
     logUtente,
-    logoutUser
+    logoutUser,
+    modificaUser
 }
 

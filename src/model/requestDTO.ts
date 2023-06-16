@@ -16,9 +16,13 @@ export interface UtenteRegistrazione{
 
 }
 
-export interface UtenteModifica{
+export interface RequestUtenteModifica{
+    nome:string;
+    cognome:string;
+    username:string;
     email:string;
     password:string;
+    immagine:any
 }
 
 export interface UtenteLogout{

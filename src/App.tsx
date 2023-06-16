@@ -8,6 +8,7 @@ import React from 'react';
 import { Card } from '@mui/material';
 import AttivitaPubbliche from './components/AttivitaPubbliche'
 import Inviti from './components/Inviti'
+import ModificaUtente from 'components/ModificaUtente';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route  path='/attivita' Component={Card}/>
         <Route  path='/attivita-pubbliche' Component={AttivitaPubbliche}/>
         <Route  path='/inviti' Component={Inviti}/>
+        <Route  path='modifica-utente' Component={ModificaUtente} ></Route>
       </Routes>
     </Router>
 

@@ -1,6 +1,6 @@
-import axios, {AxiosResponse} from 'axios';
+import axios, {Axios, AxiosResponse} from 'axios';
 import {ResposeLogin, ResposeUtente} from '../model/response';
-import {UtenteLogin, UtenteRegistrazione, UtenteLogout} from '../model/requestDTO'
+import {UtenteLogin, UtenteRegistrazione, UtenteLogout,RequestUtenteModifica} from '../model/requestDTO'
 
 // questa funzione viene usata quando si vuole autenticare un utente già registrato sul sito 
 export const loginUser = (datiLogin: UtenteLogin) : Promise<AxiosResponse<ResposeLogin>> =>{
@@ -30,5 +30,16 @@ export const userLogOut = (requestUtenteLogOut: UtenteLogout) => {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             } 
         }
+    )
+}
+
+export const modifica_utente = (requestUtenteModifica: RequestUtenteModifica): Promise<AxiosResponse<ResposeUtente>> =>{
+    return axios.patch('http://localhost:8080/utente/modifica',requestUtenteModifica,
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        } 
     )
 }

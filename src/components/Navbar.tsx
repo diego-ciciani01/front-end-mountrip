@@ -25,7 +25,11 @@ function Navbar(username){
                             <Link style={{color:'black', textDecoration:'none'}} to="/inviti">
                                 <li>Inviti</li>
                             </Link>
+                            <Link style={{color:'black', textDecoration:'none'}} to="/modifica-utente">
+                                <li>modifica</li>
+                            </Link>
                         </ul>
+                     
                     </div>
             ):(
                 <div className='Navbar'>
